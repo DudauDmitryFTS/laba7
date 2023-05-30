@@ -1,4 +1,4 @@
-package ui.components
+package com.topic2.android.notes.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.topic2.android.notes.R
 import com.topic2.android.notes.routing.NotesRouter
 import com.topic2.android.notes.routing.Screen
 import com.topic2.android.notes.theme.NotesTheme
@@ -31,18 +33,10 @@ private fun AppDrawerHeader() {
                 modifier = Modifier.padding(16.dp)
         )
         Text(
-                text = "�������",
+                text = stringResource(id = R.string.notes),
                 modifier = Modifier
                         .align(alignment = Alignment.CenterVertically)
         )
-    }
-}
-
-@Preview
-@Composable
-fun AppDrawerHeaderPreview(){
-    NotesTheme{
-        AppDrawerHeader()
     }
 }
 
@@ -99,23 +93,13 @@ private fun ScreenNavigationButton(
         }
     }
 }
-@Preview
-@Composable
-fun ScreenNavigationButtonPreview(){
-    NotesTheme{
-        ScreenNavigationButton(icon = Icons.Filled.Home,
-                label = "�������",
-                isSelected = true,
-                onClick = {}
-        )
-    }
-}
+
 
 @Composable
 private fun LightDarkThemeItem(){
     Row(Modifier.padding(8.dp)
     ) {
-        Text(text = "�������� ����� ����",
+        Text(text = stringResource(id = R.string.on_dark_theme),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier
@@ -133,15 +117,6 @@ private fun LightDarkThemeItem(){
     }
 }
 
-@Preview
-@Composable
-
-fun LightDarkThemeItemPreview(){
-    NotesTheme{
-        LightDarkThemeItem()
-    }
-}
-
 @Composable
 fun AppDrawer(
         currentScreen: Screen,
@@ -151,16 +126,15 @@ fun AppDrawer(
         AppDrawerHeader()
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
 
-        ScreenNavigationButton(icon = Icons.Filled.Home, label ="�������" , isSelected = currentScreen == Screen.Notes,
+        ScreenNavigationButton(icon = Icons.Filled.Home, label = stringResource(id = R.string.notes), isSelected = currentScreen == Screen.Notes,
                 onClick = {
                     NotesRouter.navigateTo(Screen.Notes)
                     closeDrawerAction()
                 }
         )
-        ScreenNavigationButton(icon = Icons.Filled.Delete, label ="�������" , isSelected = currentScreen == Screen.Trash,
+        ScreenNavigationButton(icon = Icons.Filled.Delete, label = stringResource(id = R.string.basket), isSelected = currentScreen == Screen.Trash,
                 onClick = {NotesRouter.navigateTo(Screen.Trash)
                     closeDrawerAction()
-
                 }
         )
         LightDarkThemeItem()
@@ -171,5 +145,33 @@ fun AppDrawer(
 fun AppDrawerPreview(){
     NotesTheme{
         AppDrawer(Screen.Notes) {}
+    }
+}
+
+@Preview
+@Composable
+fun AppDrawerHeaderPreview(){
+    NotesTheme{
+        AppDrawerHeader()
+    }
+}
+
+@Preview
+@Composable
+fun LightDarkThemeItemPreview(){
+    NotesTheme{
+        LightDarkThemeItem()
+    }
+}
+
+@Preview
+@Composable
+fun ScreenNavigationButtonPreview(){
+    NotesTheme{
+        ScreenNavigationButton(icon = Icons.Filled.Home,
+            label = stringResource(id = R.string.notes),
+            isSelected = true,
+            onClick = {}
+        )
     }
 }

@@ -1,4 +1,4 @@
-package screens
+package com.topic2.android.notes.ui.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,15 +16,33 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import com.topic2.android.notes.domain.model.NoteModel
 import com.topic2.android.notes.routing.Screen
+import com.topic2.android.notes.ui.components.AppDrawer
+import com.topic2.android.notes.ui.components.Note
+import com.topic2.android.notes.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
-import ui.components.AppDrawer
-import ui.components.Note
+
+@Composable
+fun rememberScaffoldState(
+    drawerState: DrawerState= rememberDrawerState(DrawerValue.Closed),
+    snackbarHostState: SnackbarHostState = remember{ SnackbarHostState()}
+): ScaffoldState = remember{
+    ScaffoldState(drawerState, snackbarHostState)
+}
+
+@Composable
+fun rememberDrawerState(
+    initialValue: DrawerValue,
+    confirmStateChange: (DrawerValue)-> Boolean = {true}
+): DrawerState{
+    return rememberSaveable(saver = DrawerState.Saver(confirmStateChange)){
+        DrawerState(initialValue,confirmStateChange)
+    }
+}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-
 fun NotesScreen(
-        viewModel: MainViewModel
+    viewModel: MainViewModel
 ){
     val notes: List<NoteModel> by viewModel
             .notesNotInTrash
@@ -38,21 +56,21 @@ fun NotesScreen(
         TopAppBar(
                 title = {
                     Text(
-                            text = "Notes",
-                            color = MaterialTheme.colors.onPrimary
+                        text = "Notes",
+                        color = MaterialTheme.colors.onPrimary
                     )
                 },
                 navigationIcon = {
                     IconButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    scaffoldState.drawerState.open()
+                        onClick = {
+                            coroutineScope.launch {
+                                scaffoldState.drawerState.open()
                                 }
                             }
                     ) {
                         Icon(
-                                imageVector = Icons.Filled.List,
-                                contentDescription = "Drawer Button"
+                            imageVector = Icons.Filled.List,
+                            contentDescription = "Drawer Button"
                         )
                     }
                 }
@@ -82,8 +100,8 @@ fun NotesScreen(
                         contentColor = MaterialTheme.colors.background,
                         content = {
                             Icon(
-                                    imageVector = Icons.Filled.Add,
-                                    contentDescription = "Add Note Button"
+                                imageVector = Icons.Filled.Add,
+                                contentDescription = "Add Note Button"
                             )
                         })
 
@@ -100,9 +118,9 @@ private fun NotesList(
         items(count = notes.size){noteIndex ->
             val note =notes[noteIndex]
             Note(
-                    note = note,
-                    onNoteClick = onNoteClick,
-                    onNoteCheckedChange= onNoteCheckedChange
+                note = note,
+                onNoteClick = onNoteClick,
+                onNoteCheckedChange= onNoteCheckedChange
             )
         }
     }
@@ -112,29 +130,10 @@ private fun NotesList(
 
 private fun NoteListPreview(){
     NotesList(notes = listOf(
-            NoteModel(1, "Note 1", "Content 1", null),
-            NoteModel(2, "Note 2", "Content 2", false),
-            NoteModel(3, "Note 3", "Content 3", true)
+        NoteModel(1, "Note 1", "Content 1", null),
+        NoteModel(2, "Note 2", "Content 2", false),
+        NoteModel(3, "Note 3", "Content 3", true)
     ),
-            onNoteCheckedChange = {},
-            onNoteClick = {})
-}
-@Composable
-fun rememberScaffoldState(
-        drawerState: DrawerState= rememberDrawerState(DrawerValue.Closed),
-        snackbarHostState: SnackbarHostState = remember{ SnackbarHostState()}
-): ScaffoldState = remember{
-    ScaffoldState(drawerState, snackbarHostState)
-}
-
-@Composable
-fun rememberDrawerState(
-        initialValue: DrawerValue,
-        confirmStateChange: (DrawerValue)-> Boolean = {true}
-): DrawerState{
-    return rememberSaveable(saver = DrawerState.Saver(confirmStateChange)){
-        DrawerState(initialValue,confirmStateChange)
-    }
-
-
+        onNoteCheckedChange = {},
+        onNoteClick = {})
 }
