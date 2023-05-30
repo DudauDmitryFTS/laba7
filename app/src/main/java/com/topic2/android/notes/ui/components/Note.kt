@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
-package ui.components
+package com.topic2.android.notes.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,7 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.topic2.android.notes.domain.model.NoteModel
-import com.topic2.android.notes.util.fromHex
+import com.topic2.android.notes.ui.fromHex
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -36,9 +35,17 @@ fun Note (
             backgroundColor = background
     ){
         ListItem(
-                text = { Text(text = note.title, maxLines = 1)},
+                text = {
+                    Text(
+                        text = note.title,
+                        maxLines = 1
+                    )
+                       },
                 secondaryText = {
-                    Text(text=note.content, maxLines = 1)
+                    Text(
+                        text=note.content,
+                        maxLines = 1
+                    )
                 },
                 icon = {
                     NoteColor(
@@ -61,8 +68,6 @@ fun Note (
                 modifier = Modifier.clickable { onNoteClick.invoke(note) }
         )
     }
-
-
 }
 
 
@@ -70,11 +75,11 @@ fun Note (
 @Composable
 private fun NotePreview(){
     Note(
-            note = NoteModel(
-                    1,
-                    "������� 1",
-                    "����������� 1",
-                    null
-            )
+        note = NoteModel(
+            1,
+            "Заметка 1",
+            "Содержание 1",
+            null
+        )
     )
 }

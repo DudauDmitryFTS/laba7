@@ -1,4 +1,4 @@
-package ui.components
+package com.topic2.android.notes.ui.components
 
 
 import androidx.compose.foundation.Image
@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.topic2.android.notes.R
 import com.topic2.android.notes.theme.NotesTheme
 
 
@@ -54,7 +56,7 @@ fun TopAppBar(
                 style = TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 20.sp,
-                        letterSpacing = 1.15.sp
+                        letterSpacing = 0.15.sp
                 ),
                 modifier = Modifier
                         .fillMaxWidth()
@@ -69,10 +71,9 @@ fun TopAppBar(
 private fun TopAppBarPreview(){
     NotesTheme{
         TopAppBar(
-                title = "�������",
+                title = stringResource(id = R.string.notes),
                 icon = Icons.Filled.List,
                 onIconClick = {}
-
         )
     }
 }
